@@ -1,8 +1,6 @@
 package project.net.service;
 
-import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import project.net.dao.PasswordResetDao;
 import project.net.dao.RoleDao;
@@ -10,6 +8,8 @@ import project.net.dao.UserDao;
 import project.net.model.PasswordResetToken;
 import project.net.model.Role;
 import project.net.model.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
@@ -21,14 +21,12 @@ public class UserService {
     private UserDao userDao;
     private RoleDao roleDao;
     private PasswordResetDao passwordResetDao;
-    private MessageSource messages;
 
     @Autowired
-    public UserService(UserDao userDao, RoleDao roleDao, PasswordResetDao passwordResetDao, MessageSource messages) {
+    public UserService(UserDao userDao, RoleDao roleDao, PasswordResetDao passwordResetDao) {
         this.userDao = userDao;
         this.roleDao = roleDao;
         this.passwordResetDao = passwordResetDao;
-        this.messages = messages;
     }
 
     public User findUserById(Long userId) {
@@ -36,7 +34,8 @@ public class UserService {
     }
 
     public List<User> getAllUsers() {
-        return (List<User>)userDao.findAll();
+        List<User> result = (List<User>)userDao.findAll();
+        return result;
     }
 
     public User findUserByEmail(String email) {
@@ -63,19 +62,22 @@ public class UserService {
         return passwordResetDao.save(myToken);
     }
 
-    public String validateToken(String token, Locale local) {
-        String result = null;
-        PasswordResetToken passToken = passwordResetDao.findByToken(token);
-        if (Objects.isNull(passToken)) {
-            result = messages.getMessage("token.invalid", null, local);
-        } else if (passToken.getExpiryDate().isBefore(LocalDate.now())) {
-            result = messages.getMessage("date.expired", null, local);
-        }
-        return result;
+    public User changeUserPassword(User user, String password) {
+        String encodePassword = new BCryptPasswordEncoder().encode(password);
+        user.setPassword(encodePassword);
+        return userDao.save(user);
     }
 
-    public User changeUserPassword(User user, String password) {
-        user.setPassword(password);
-        return userDao.save(user);
+    public User getUserByEmail(String email) {
+        return userDao.findUserByEmail(email);
+    }
+
+    public void deleteToken(String token) {
+       passwordResetDao.deleteByToken(token);
+    }
+
+    public boolean passwordValidation(User user) {
+        User checkedUser = userDao.findUserByEmail(user.getEmail());
+        return Objects.equals(user.getPassword(), user.getConfirmPassword()) && Objects.isNull(checkedUser);
     }
 }

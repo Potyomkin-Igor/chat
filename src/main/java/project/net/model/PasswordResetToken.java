@@ -5,23 +5,19 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Column;
-import javax.persistence.OneToOne;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
+import javax.persistence.*;
 import java.time.LocalDate;
 
-@Entity
+
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@Entity
 @Table(name = "password_reset_tokens")
 public class PasswordResetToken {
-
+    @Id
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
+    private Long id;
     @Column(name = "token")
     private String token;
     @OneToOne(fetch = FetchType.LAZY)
@@ -29,4 +25,10 @@ public class PasswordResetToken {
     private User user;
     @Column(name = "expire_time")
     private LocalDate expiryDate;
+
+    public PasswordResetToken(String token, User user, LocalDate expiryDate) {
+        this.token = token;
+        this.user = user;
+        this.expiryDate = expiryDate;
+    }
 }

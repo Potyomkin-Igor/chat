@@ -1,13 +1,32 @@
 spring:
-  profiles:
-    active: default
   jpa:
    database-platform: org.hibernate.dialect.H2Dialect
    hibernate:
       ddl-auto: create-drop
    properties:
-      hibernate:
-        default_schema: thymeleaf
-        
+     hibernate:
+       default_schema: thymeleaf
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: testmailthymeleaf@gmail.com
+    password: thymeleaftest
+    protocol: smtp
+    tsl: true
+    properties.mail.smtp:
+      auth: true
+      starttls.enable: true
+      ssl.trust: smtp.gmail.com
+    test-connection: true
+  messages:
+    basename: MessagesBundle
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML5
+    enabled: true
+
+support:
+ email: testmailthymeleaf@gmail.com
 server:
   port: 9001

@@ -23,6 +23,5 @@ public class Message {
     @Column(name = "message")
     private String message;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
     private User user;
 }

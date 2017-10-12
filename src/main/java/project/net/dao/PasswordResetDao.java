@@ -8,5 +8,5 @@ import project.net.model.PasswordResetToken;
 @Repository
 public interface PasswordResetDao extends PagingAndSortingRepository<PasswordResetToken, Long> {
     PasswordResetToken findByToken(String token);
-    PasswordResetToken findByUserId(Long userId);
+    void deleteByToken(String token);
 }

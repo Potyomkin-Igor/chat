@@ -6,7 +6,7 @@
 /out/
 *.iml
 
-### Archives template ###
+### Archives templates ###
 # It's better to unpack these files and commit the raw source because
 # git has its own built in compression methods.
 *.7z
@@ -35,7 +35,7 @@
 *.msm
 *.msp
 
-### Maven template ###
+### Maven templates ###
 target/
 pom.xml.tag
 pom.xml.releaseBackup
@@ -57,7 +57,7 @@ buildNumber.properties
 ### Database files ###
 *.bin
 
-### Windows template ###
+### Windows templates ###
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
@@ -73,7 +73,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-### Linux template ###
+### Linux templates ###
 *~
 
 # temporary files which can be created if a process still has a handle open of a deleted file
@@ -88,7 +88,7 @@ $RECYCLE.BIN/
 # .nfs files are created when an open file is removed but is still being accessed
 .nfs*
 
-### Eclipse template ###
+### Eclipse templates ###
 .metadata
 bin/
 tmp/
@@ -140,7 +140,7 @@ local.properties
 # Code Recommenders
 .recommenders/
 
-### NetBeans template ###
+### NetBeans templates ###
 nbproject/private/
 build/
 nbbuild/
@@ -148,7 +148,7 @@ dist/
 nbdist/
 .nb-gradle/
 
-### Java template ###
+### Java templates ###
 *.class
 
 # BlueJ files
@@ -164,7 +164,7 @@ nbdist/
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
-### macOS template ###
+### macOS templates ###
 *.DS_Store
 .AppleDouble
 .LSOverride

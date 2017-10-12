@@ -12,7 +12,7 @@ import java.util.List;
 @Transactional
 public class MessageService {
     @Autowired
-   private MessageDao messageDao;
+    private MessageDao messageDao;
 
     public void saveMessage(Message message) {
         messageDao.save(message);
