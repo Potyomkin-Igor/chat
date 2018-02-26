@@ -68,7 +68,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return slr;
     }
 
-//    @Bean
+//    @Beanq
 //    public ReloadableResourceBundleMessageSource messageSource() {
 //        return new ReloadableResourceBundleMessageSource();
 //    }
