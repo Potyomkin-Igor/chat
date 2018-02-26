@@ -42,21 +42,21 @@ public class LoginController {
         return model;
     }
 
-    @PostMapping("/login")
-    public ModelAndView checkLogin(@Valid DtoUser dtoUser, BindingResult result) {
-        ModelAndView model = new ModelAndView();
-        if(result != null) {
-            model.setViewName("/logon");
-            model.addObject(new DtoUser());
-        }
-        User user = userService.findUserByEmail(dtoUser.getEmail());
-        if(user != null) {
-            if(user.getPassword().equals(dtoUser.getPassword())){
-                model.setViewName("/");
-            }
-        }
-        return model;
-    }
+//    @PostMapping("/login")
+//    public ModelAndView checkLogin(@Valid DtoUser dtoUser, BindingResult result) {
+//        ModelAndView model = new ModelAndView();
+//        if(result != null) {
+//            model.setViewName("/login");
+//            model.addObject(new DtoUser());
+//        }
+//        User user = userService.findUserByEmail(dtoUser.getEmail());
+//        if(user != null) {
+//            if(user.getPassword().equals(dtoUser.getPassword())){
+//                model.setViewName("/");
+//            }
+//        }
+//        return model;
+//    }
 
     @GetMapping("/logout")
     public String logoutPage (HttpServletRequest request, HttpServletResponse response) {

@@ -8,6 +8,11 @@ import javax.validation.constraints.Size;
 
 @Data
 public class DtoUser {
+
+    @NotNull
+    private String firstName;
+    @NotNull
+    private String lastName;
     @Email
     @NotNull
     @Pattern(regexp = "|^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*"

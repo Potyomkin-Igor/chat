@@ -18,13 +18,14 @@ public class CustomUserDetailService implements UserDetailsService{
 
     private UserService userService;
 
+    @Autowired
     public CustomUserDetailService(UserService userService) {
         this.userService = userService;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        project.net.model.User user = userService.findUserByEmail(username);
+        project.net.model.User user = userService.findUserByEmail(username.toLowerCase());
         if (Objects.nonNull(user)) {
             Set<GrantedAuthority> authorities = new HashSet<>();
             user.getRoles().forEach(item -> {

@@ -9,6 +9,7 @@ import project.net.model.PasswordResetToken;
 import project.net.model.Role;
 import project.net.model.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import project.net.model.dto.DtoUser;
 
 
 import javax.transaction.Transactional;
@@ -42,16 +43,17 @@ public class UserService {
         return userDao.findUserByEmail(email);
     }
 
-    public User saveUser(User user) {
-        if(Objects.isNull(findUserByEmail(user.getEmail())) && Objects.nonNull(user.getPassword())
-                && Objects.equals(user.getConfirmPassword(), user.getPassword())) {
-            String name = user.getFirstName().substring(0,1).toUpperCase();
-            name = name + user.getFirstName().substring(1);
-            user.setFirstName(name);
+    public User saveUser(DtoUser dtoUser) {
+        if(Objects.isNull(findUserByEmail(dtoUser.getEmail()))) {
+            User newUser = new User();
+            String name = dtoUser.getFirstName().substring(0,1).toUpperCase();
+            name = name + dtoUser.getFirstName().substring(1);
+            newUser.setFirstName(name);
+            newUser.setEmail(dtoUser.getEmail().toLowerCase());
             Set<Role> roles = new HashSet<>();
             roles.add(roleDao.findByName("ROLE_USER"));
-            user.setRoles(roles);
-            return userDao.save(user);
+            newUser.setRoles(roles);
+            return userDao.save(newUser);
         }
         return null;
     }
@@ -76,7 +78,7 @@ public class UserService {
        passwordResetDao.deleteByToken(token);
     }
 
-    public boolean passwordValidation(User user) {
+    public boolean passwordValidation(DtoUser user) {
         User checkedUser = userDao.findUserByEmail(user.getEmail());
         return Objects.equals(user.getPassword(), user.getConfirmPassword()) && Objects.isNull(checkedUser);
     }

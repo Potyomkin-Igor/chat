@@ -6,6 +6,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import project.net.model.User;
+import project.net.model.dto.DtoUser;
 import project.net.service.UserService;
 
 import javax.validation.Valid;
@@ -28,7 +29,7 @@ public class UserController {
         return model;
     }
 
-    @GetMapping("/create")
+    @GetMapping("registration")
     public ModelAndView getUserForm() {
         ModelAndView model = new ModelAndView();
         model.setViewName("createUser");
@@ -36,15 +37,15 @@ public class UserController {
         return model;
     }
 
-    @PostMapping("/create")
-    public ModelAndView create(@Valid User user, BindingResult result) {
+    @PostMapping("registration")
+    public ModelAndView create(@Valid DtoUser dtoUser, BindingResult result) {
         ModelAndView model = new ModelAndView();
-        boolean userIsValid = userService.passwordValidation(user);
+        boolean userIsValid = userService.passwordValidation(dtoUser);
         if(result.hasErrors() && Objects.equals(userIsValid, Boolean.FALSE)){
             model.setViewName("createUser");
-            model.addObject(user);
+            model.addObject(dtoUser);
         } else {
-            userService.saveUser(user);
+            userService.saveUser(dtoUser);
             model.setViewName("usersChat");
             model.addObject("allUsers", userService.getAllUsers());
         }
